@@ -2,7 +2,7 @@ name: Playwright Health Check
 
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "*/14 * * * *"
   workflow_dispatch:
 
 jobs:

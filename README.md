@@ -3,7 +3,7 @@
 This project contains a workflow for health check for varienty of web services.
 
 ### Install Dependencies
-Ensure you have **Python 3.10+** installed, then run:
+Ensure you have **Python 3.10+** installed and run:
 
 ```sh
 pip install playwright
