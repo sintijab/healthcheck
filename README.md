@@ -2,15 +2,14 @@
 
 This project contains a workflow for health check for varienty of web services.
 
-## Setup
+### Install Dependencies
+Ensure you have **Python 3.10+** installed, then run:
 
-### Install
 ```sh
-yarn install -D playwright
-yarn playwright install
-```
+pip install playwright
+playwright install --with-deps
 
 ### Run the Script Locally
 ```sh
-node scripts/health-check.js
+python scripts/health_check.py
 ```
