@@ -2,7 +2,7 @@
 
 This project contains a workflow for health check for varienty of web services.
 
-### Install Dependencies
+### Install
 Ensure you have **Python 3.10+** installed and run:
 
 ```sh

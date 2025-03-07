@@ -24,4 +24,4 @@ jobs:
           playwright install --with-deps
 
       - name: Run Playwright Script
-        run: python scripts/health_check.py
+        run: python scripts/health-check.py
