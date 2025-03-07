@@ -11,5 +11,5 @@ playwright install --with-deps
 ```
 ### Run the Script Locally
 ```sh
-python scripts/health_check.py
+python scripts/health-check.py
 ```
