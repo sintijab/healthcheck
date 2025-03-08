@@ -17,7 +17,7 @@ async def check_health():
     ]
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=True)
+        browser = await p.chromium.launch(headless=True, timeout=60000)
 
         for url in urls:
             user_agent = random.choice(user_agents)
@@ -29,15 +29,16 @@ async def check_health():
                 geolocation={"latitude": 37.7749, "longitude": -122.4194},
                 permissions=["geolocation"],
             )
-
+            context.set_default_timeout(60000)
             page = await context.new_page()
 
             try:
                 print(f"Checking {url} with User-Agent: {user_agent}")
 
                 await asyncio.sleep(random.uniform(1, 3))  # Simulate human browsing delay
+                page.set_default_timeout(60000)
 
-                response = await page.goto(url, wait_until="domcontentloaded")
+                response = await page.goto(url, wait_until="domcontentloaded", timeout=60000)
 
                 if response.status == 200:
                     print(f"{url} is up!")
