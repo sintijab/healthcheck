@@ -35,7 +35,7 @@ async def check_health():
             try:
                 print(f"Checking {url} with User-Agent: {user_agent}")
 
-                await asyncio.sleep(random.uniform(1, 3))  # Simulate human browsing delay
+                await asyncio.sleep(random.uniform(1, 40))  # Simulate human browsing delay
                 page.set_default_timeout(60000)
 
                 response = await page.goto(url, wait_until="domcontentloaded", timeout=60000)
