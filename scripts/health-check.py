@@ -16,6 +16,9 @@ async def check_health():
         "https://socket-io-3i32.onrender.com/health"
     ]
 
+    max_retries = 3
+    retry_delay = 5
+
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True, timeout=60000)
 
@@ -32,26 +35,34 @@ async def check_health():
             context.set_default_timeout(60000)
             page = await context.new_page()
 
-            try:
-                print(f"Checking {url} with User-Agent: {user_agent}")
+            retries = 0
+            while retries <= max_retries:
+                try:
+                    print(f"Checking {url} (Attempt {retries + 1}) with User-Agent: {user_agent}")
 
-                await asyncio.sleep(random.uniform(1, 40))  # Simulate human browsing delay
-                page.set_default_timeout(60000)
+                    await asyncio.sleep(random.uniform(1, 40))
+                    page.set_default_timeout(60000)
 
-                response = await page.goto(url, wait_until="domcontentloaded", timeout=60000)
+                    response = await page.goto(url, wait_until="domcontentloaded", timeout=60000)
 
-                if response.status == 200:
-                    print(f"{url} is up!")
-                else:
-                    print(f"{url} returned status {response.status}")
+                    if response.status == 200:
+                        print(f"{url} is up!")
+                        break
+                    else:
+                        print(f"{url} returned status {response.status}, retrying...")
+                        retries += 1
+                        await asyncio.sleep(retry_delay * (2 ** retries))
+
+                except Exception as e:
+                    print(f"Error checking {url}: {e}, retrying...")
+                    retries += 1
+                    await asyncio.sleep(retry_delay * (2 ** retries))
+
+                if retries > max_retries:
+                    print(f"Failed to check {url} after {max_retries} retries.")
                     exit(1)
 
-            except Exception as e:
-                print(f"Error checking {url}: {e}")
-                exit(1)
-
-            finally:
-                await context.close()
+            await context.close()
 
         await browser.close()
 
