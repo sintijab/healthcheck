@@ -13,7 +13,7 @@ async def check_health():
     urls = [
         "https://jolly-grass-4575.ploomber.app/health",
         "https://ai-career-assistant.cofun.digital/health",
-        "https://socket-io-3i32.onrender.com/health"
+        "https://socket-io-sound.onrender.com/health"
     ]
 
     max_retries = 3
