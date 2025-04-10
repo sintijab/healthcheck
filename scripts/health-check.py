@@ -45,7 +45,21 @@ async def check_health():
 
                     response = await page.goto(url, wait_until="domcontentloaded", timeout=60000)
 
-                    if response.status == 200:
+                    if response.status == 404:
+                        print(f"{url} returned status 404, attempting to click relaunch app...")
+                        
+                        try:
+                            await page.wait_for_selector('[data-testid="relaunch-button"]', timeout=5000)
+                            await page.click('[data-testid="relaunch-button"]')
+                            print(f"Retrying the health check...")
+                            await asyncio.sleep(retry_delay * (2 ** retries))
+                            continue
+                        except Exception as e:
+                            print(f"Failed to find the relaunch button: {e}")
+                            retries += 1
+                            await asyncio.sleep(retry_delay * (2 ** retries))
+
+                    elif response.status == 200:
                         print(f"{url} is up!")
                         break
                     else:
