@@ -17,7 +17,7 @@ async def check_health():
     ]
 
     max_retries = 3
-    retry_delay = 5
+    retry_delay = 4
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True, timeout=60000)
