@@ -11,7 +11,7 @@ async def check_health():
     ]
 
     urls = [
-        "https://ancient-glade-0250.ploomber.app/health",
+        "https://raspy-dew-8966.ploomber.app/health",
         "https://ai-career-assistant.cofun.digital/health",
         "https://sound-master-chat.onrender.com/health"
     ]
